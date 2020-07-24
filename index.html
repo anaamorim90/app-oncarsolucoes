@@ -1,0 +1,223 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <title>Veículos OnCar</title>
+    <link rel="stylesheet" href="main.css">
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css"
+        integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
+    <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js"
+        integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo"
+        crossorigin="anonymous"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js"
+        integrity="sha384-UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGa3JDZwrnQq4sF86dIHNDz0W1"
+        crossorigin="anonymous"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"
+        integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM"
+        crossorigin="anonymous"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+    <script src="https://code.jquery.com/jquery-3.2.1.min.js"></script>
+
+</head>
+
+<body>
+    <script src="app.js"></script>
+
+    <br>
+    <div class="title">
+        <div style="align-self: center;">
+            <button type="button" class="btn btn-info" btn-sm data-toggle="modal" data-target="#modalCadastrar"
+                data-backdrop="static">
+                <i class="fa fa-plus-circle" style="font-size: 1.5em;"></i>
+            </button>
+
+
+            <!-- Modal -->
+            <div class="modal fade" id="modalCadastrar" tabindex="-1" role="dialog" aria-labelledby="modalLabel"
+                aria-hidden="true">
+                <div class="modal-dialog" role="document">
+                    <div class="modal-content">
+                        <div class="modal-header">
+                            <h5 class="modal-title" id="modalLabel">
+                                <button id="buttonloadCadastrar" class="buttonload">
+
+                                    </i></button>
+                                Cadastro de Veículo</h5>
+                        </div>
+                        <div class="modal-body" id="informacoesmodalCadastrar">
+                            <form>
+                                <h6 class="card-text"><b>Veículo</b></h6>
+                                <input type="text" name="veiculo" id="veiculoCdt">
+                                <br>
+                                <br>
+                                <table style="width:100%">
+                                    <thead>
+                                        <tr>
+                                            <td>
+                                                <h6 class="card-text"><b>Marca</b></h6>
+                                            </td>
+                                            <td>
+                                                <h6 class="card-text"><b>Ano</b></h6>
+                                            </td>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        <tr>
+                                            <td>
+                                                <input type="text" name="marca" id="marcaCdt">
+                                            </td>
+                                            <td>
+                                                <input type="text" name="ano" id="anoCdt">
+                                            </td>
+                                        </tr>
+                                    </tbody>
+                                </table>
+                                <br>
+
+                                <h6 class="card-text"><b>Descrição</b></h6>
+                                <textarea type="text" name="descricao" id="descricaoCdt" rows="4" cols="60"></textarea>
+                                <br>
+                            </form>
+                        </div>
+                        <div class="modal-footer">
+                            <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancelar</button>
+                            <button type="button" class="btn btn-primary" id="salvarDadosCadastrados">Cadastrar</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <h3 style="margin-left: 1%;">Veículos OnCar</h3>
+    </div>
+
+    <br>
+    <div class="input-group" style="margin-left: 20%;">
+        <form id="formBusca">
+            <input style="width: 50em;" type="text" id="termoBusca" placeholder="Buscar veículo" class="form-control border-0 bg-light">
+        </form>
+        <span class="input-group-btn">
+            <button id="buscar" class="btn btn-link text-info"><i class="fa fa-search"></i></button>
+        </span>
+    </div>
+    <br>
+    <div style="display: flex;">
+        <div class="card border-info mb-3" style="width: 40rem; margin-left: 5%;">
+            <div class="card-header">
+                <button id="buttonloadLista" class="buttonload">
+
+                    </i></button>
+                Lista de Veículos
+                <button id="atualizar" onClick="atualizarListaVeiculos()" class="btn btn-link text-info"><i class="fa fa-refresh"></i></button>
+
+
+            </div>
+            <div class="card-body text-info">
+
+                <ul id="veiculos" style="margin-left:-7%;">
+
+                </ul>
+
+            </div>
+        </div>
+
+        <div class="card border-info mb-3" style="width: 30rem; margin-left: 5%; height: 33rem">
+            <div class="card-header">
+                <button id="buttonloadEdt" class="buttonload">
+
+                    </i></button>
+                Detalhes do Veículos</div>
+            <div class="card-body text-info" id="detalhesVeiculo">
+            </div>
+
+            <br>
+            <div class="button-right"><button data-toggle="modal" data-target="#modalEditar" type="button"
+                    class="btn btn-info" btn-sm onClick="setaDadosModal(0)">Editar</button>
+
+                <!-- Modal -->
+                <div class="modal fade" id="modalEditar" tabindex="-1" role="dialog" aria-labelledby="modalLabel"
+                    aria-hidden="true">
+                    <div class="modal-dialog" role="document">
+                        <div class="modal-content">
+                            <div class="modal-header">
+                                <h5 class="modal-title" id="modalLabel">
+                                    <button id="buttonloadEditar" class="buttonload">
+
+                                        </i></button>
+                                    Detalhes</h5>
+                                <button type="button" class="close" data-dismiss="modal" aria-label="Fechar">
+                                    <span aria-hidden="true">&times;</span>
+                                </button>
+                            </div>
+                            <div class="modal-body" id="informacoesModalEditar">
+                                <h6 class="card-text"><b>Veículo</b></h6>
+
+                                <form id="modalEditar" method="post" action="">
+                                    <input type="text" name="veiculo" id="veiculoEdt">
+                                </form>
+
+                                <br>
+                                <table style="width:100%">
+                                    <thead>
+                                        <tr>
+                                            <td>
+                                                <h6 class="card-text"><b>Marca</b></h6>
+                                            </td>
+                                            <td>
+                                                <h6 class="card-text"><b>Ano</b></h6>
+                                            </td>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        <tr>
+                                            <td>
+                                                <form id="modalEditar" method="post" action="">
+                                                    <input type="text" name="marca" id="marcaEdt">
+                                                </form>
+                                            </td>
+                                            <td>
+                                                <form id="modalEditar" method="post" action="">
+                                                    <input type="text" name="ano" id="anoEdt">
+                                                </form>
+                                            </td>
+                                        </tr>
+                                    </tbody>
+                                </table>
+                                <br>
+
+                                <h6 class="card-text"><b>Descrição</b></h6>
+                                <form id="modalEditar" method="post" action="">
+                                    <textarea type="text" name="descricao" id="descricaoEdt" rows="4"
+                                        cols="60"></textarea>
+                                </form>
+                                <br>
+
+                                <form id="modalEditar" method="post" action="">
+                                    <h6 class="card-text" name="vendidoText" id="vendidoTextEdt"></h6>
+                                </form>
+
+                            </div>
+                            <div class="modal-footer">
+                                <button type="button" class="btn btn-secondary" data-dismiss="modal">Fechar</button>
+                                <button type="button" class="btn btn-primary" id="salvarDadosEditados">Salvar</button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <button type="button" style="margin-left: 1rem;" class="btn btn-info" btn-sm
+                    onClick="remover()">Remover</button>
+            </div>
+
+            <br>
+
+        </div>
+
+
+    </div>
+
+
+
+</body>
+
+</html>
